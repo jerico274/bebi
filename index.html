@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Valentine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="text-side">
+            <h1>With Love 💕</h1>
+            <p>A special message for you</p>
+        </div>
+
+        <div class="envelope-wrapper" onclick="toggleLetter()">
+            <div class="hearts-container" id="hearts"></div>
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="pocket"></div>
+                
+                <div class="letter">
+                    <img src="image/bg.jpg" class="letter-bg" alt="background">
+                    
+                    <div class="letter-text">
+                        <h3>To my bebi</h3>
+                        <p>iloveyou po, mwaaa!!</p>
+                        <p class="signature">rikrik ❤️</p>
+                        <span class="close-hint">(Click to close)</span>
+                    </div>
+                </div>
+
+                <div class="ribbon">🎀</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleLetter() {
+            const wrapper = document.querySelector('.envelope-wrapper');
+            wrapper.classList.toggle('open');
+            
+            if(wrapper.classList.contains('open')) {
+                createHearts();
+            }
+        }
+
+        function createHearts() {
+            const container = document.getElementById('hearts');
+            for(let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+    </script>
+</body>
+</html>

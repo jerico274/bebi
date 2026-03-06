@@ -1,0 +1,161 @@
+:root {
+    --envelope-color: #f08080;
+    --envelope-dark: #e57373;
+    --text-pink: #d63384;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #ffcad4 0%, #fbc2eb 100%);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+.text-side h1 {
+    font-size: 3rem;
+    color: var(--text-pink);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.envelope-wrapper {
+    position: relative;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.envelope {
+    position: relative;
+    width: 280px;
+    height: 180px;
+    background-color: var(--envelope-color);
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 100px solid var(--envelope-dark);
+    transform-origin: top;
+    z-index: 4;
+    transition: transform 0.5s ease 0.4s, z-index 0.1s 0.4s;
+}
+
+.pocket {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 140px solid var(--envelope-color);
+    border-right: 140px solid var(--envelope-color);
+    border-bottom: 90px solid var(--envelope-dark);
+    border-top: 90px solid transparent;
+    z-index: 3;
+}
+
+/* THE LETTER */
+.letter {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    width: 250px;
+    height: 180px;
+    background: white;
+    box-sizing: border-box;
+    text-align: center;
+    color: var(--text-pink);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    z-index: 2;
+    opacity: 0;
+    overflow: hidden; /* Keeps the image inside the paper corners */
+    transition: opacity 0.4s ease 0s, transform 0.6s ease 0s;
+}
+
+/* BACKGROUND IMAGE STYLING */
+.letter-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.15; /* ADJUST THIS for transparency */
+    z-index: -1;
+}
+
+.letter-text {
+    position: relative;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.4s ease 0s;
+}
+
+/* --- THE OPEN STATE --- */
+
+.open .flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+    transition: transform 0.5s ease 0s, z-index 0.1s 0.1s;
+}
+
+.open .letter {
+    opacity: 1;
+    transform: translateY(-95px) rotate(-2deg); 
+    height: 260px;
+    z-index: 5;
+    transition: opacity 0.5s ease 0.4s, transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s;
+}
+
+.open .letter-text {
+    opacity: 1;
+    transition: opacity 0.5s ease 1s;
+}
+
+/* FLOATING HEARTS */
+.hearts-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.heart {
+    position: absolute;
+    bottom: 50%;
+    font-size: 1.5rem;
+    animation: floatUp 3s ease-in forwards;
+    opacity: 0;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+}
+
+.ribbon {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.open .ribbon { opacity: 0; }
+.signature { margin-top: 15px; font-weight: bold; }
+.close-hint { display: block; font-size: 0.7rem; margin-top: 10px; opacity: 0.5; }
